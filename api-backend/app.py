@@ -8,7 +8,7 @@ from textblob import TextBlob
 app = Flask(__name__)
 CORS(app)
 
-# Retrieve database credentials from AWS SecretsManager
+# Retrieve database credentials from AWS SecretsManager (comment out the L12:L20 if you are using ENV VARS to retrieve DB credentials)
 def get_secret(secret_name, region_name="us-east-1"):
     client = boto3.client('secretsmanager', region_name=region_name)
     response = client.get_secret_value(SecretId=secret_name)
@@ -18,6 +18,10 @@ def get_secret(secret_name, region_name="us-east-1"):
 # Database credentials retrieved from AWS SecretsManager
 db_credentials = get_secret('your_secret_name_here')
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_credentials['DB_USERNAME']}:{db_credentials['DB_PASSWORD']}@{db_credentials['DB_ENDPOINT']}/{db_credentials['DB_NAME']}"
+
+# Setup with ENV variables (comment out L23 if you are using AWS SecretsManager to retrieve DB credentials)
+# app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{os.environ.get('DB_USERNAME')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_ENDPOINT')}/{os.environ.get('DB_NAME')}"
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
