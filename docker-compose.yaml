@@ -1,0 +1,34 @@
+networks:
+  myapp:
+
+services:
+  frontend:
+    build: frontend/
+    ports:
+      - "80:80"
+    networks:
+      - myapp
+
+  backend:
+    build: api-backend/
+    ports:
+      - "3000:80"
+    networks:
+      - myapp
+    environment:
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_ENDPOINT: ${DB_ENDPOINT}
+      DB_NAME: ${DB_NAME}
+    depends_on:
+      - database
+      
+  database:
+    build: database/
+    networks:
+      - myapp
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
