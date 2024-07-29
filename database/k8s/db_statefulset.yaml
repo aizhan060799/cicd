@@ -1,0 +1,114 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+type: Opaque
+data:
+  MYSQL_ROOT_PASSWORD: YWRtaW4K= # base64 encoded value for "admin"
+  MYSQL_DATABASE: cmV2aWV3c19kYgo= # base64 encoded value for "reviews_db"
+  MYSQL_USER: YWRtaW4K= # base64 encoded value for "admin"
+  MYSQL_PASSWORD: YWRtaW4K= # base64 encoded value for "admin"
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: standard
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2
+  fsType: ext4
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-schema
+data:
+  db-schema-creation.sql: |
+    -- Create the products table
+    CREATE TABLE product (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        name VARCHAR(80) NOT NULL
+    );
+
+    -- Create the reviews table
+    CREATE TABLE review (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        content VARCHAR(200) NOT NULL,
+        product_id INT NOT NULL,
+        polarity FLOAT,
+        subjectivity FLOAT,
+        FOREIGN KEY (product_id) REFERENCES product(id)
+    );
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  serviceName: "mysql"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: 401413892014.dkr.ecr.us-east-1.amazonaws.com/database:v2_stateful_set
+          ports:
+            - containerPort: 3306
+              name: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_DATABASE
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
+          volumeMounts:
+            - name: mysql-storage
+              mountPath: /var/lib/mysql
+            - name: mysql-schema
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: mysql-schema
+          configMap:
+            name: mysql-schema
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: standard
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  ports:
+    - port: 3306
+      name: mysql
+  clusterIP: None
+  selector:
+    app: mysql
