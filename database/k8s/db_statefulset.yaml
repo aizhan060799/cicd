@@ -7,7 +7,7 @@ data:
   MYSQL_ROOT_PASSWORD: UGFzc3dvcmQ0cm9vdA== # Password4root
   MYSQL_DATABASE: cmV2aWV3c19kYg== # reviews_db
   MYSQL_USER: YWRtaW4= # admin
-  MYSQL_PASSWORD: SGFyZHRvaGFjazIwMjU= #Hardtohack2025
+  MYSQL_PASSWORD: SGFyZHRvaGFjazIwMjU= # Hardtohack2025
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
