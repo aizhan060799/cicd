@@ -1,6 +1,6 @@
-var baseUrl = 'http://localhost:3000'; // Use localhost for local browser access
-// var baseUrl = 'http://reviews-api.example.com:80'; // Address for the backend/API server - use this if you are deploying into the cloud
-
+// var baseUrl = 'http://localhost:3000'; // Use localhost for local browser access
+// var baseUrl = 'http://reviews-api.example.com:80'; // Address for the backend/API server - use this if you are deploying into the cloud and using Route53 DNS name
+var baseUrl = 'http://ae8ef033730084cc58dca34619751989-639992868.us-east-1.elb.amazonaws.com'; // Address for the backend/API server - use this if you are using k8s load balancer service
 
 // Add product
 $("#product-form").submit(function (e) {
