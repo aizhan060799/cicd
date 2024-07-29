@@ -4,10 +4,10 @@ metadata:
   name: mysql-secret
 type: Opaque
 data:
-  MYSQL_ROOT_PASSWORD: YWRtaW4K= # base64 encoded value for "admin"
-  MYSQL_DATABASE: cmV2aWV3c19kYgo= # base64 encoded value for "reviews_db"
-  MYSQL_USER: YWRtaW4K= # base64 encoded value for "admin"
-  MYSQL_PASSWORD: YWRtaW4K= # base64 encoded value for "admin"
+  MYSQL_ROOT_PASSWORD: UGFzc3dvcmQ0cm9vdA== # Password4root
+  MYSQL_DATABASE: cmV2aWV3c19kYg== # reviews_db
+  MYSQL_USER: YWRtaW4= # admin
+  MYSQL_PASSWORD: SGFyZHRvaGFjazIwMjU= #Hardtohack2025
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -46,7 +46,7 @@ metadata:
   name: mysql
 spec:
   serviceName: "mysql"
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: mysql
@@ -57,7 +57,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: 401413892014.dkr.ecr.us-east-1.amazonaws.com/database:v2_stateful_set
+          image: 401413892014.dkr.ecr.us-east-1.amazonaws.com/database:stateful_set
           ports:
             - containerPort: 3306
               name: mysql
@@ -98,7 +98,7 @@ spec:
         accessModes: ["ReadWriteOnce"]
         resources:
           requests:
-            storage: 10Gi
+            storage: 1Gi
         storageClassName: standard
 ---
 apiVersion: v1
