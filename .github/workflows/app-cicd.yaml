@@ -54,7 +54,7 @@ jobs:
 
       - name: deploy the app
         working-directory: api-backend/
-        run: kubectl apply -f k8/backend-deployment.yaml
+        run: kubectl apply -f k8s/backend-deployment.yaml
         
 
      
