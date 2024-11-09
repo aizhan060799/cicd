@@ -18,14 +18,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3 #name-of-owner-organization/name-of-the-repo@ref
+        uses: actions/checkout@v4 #name-of-owner-organization/name-of-the-repo@ref
         #with: we can add version
           #node-version: 18
       #clone repo
       - name: configure aws credentials
-        uses: aws-action/configure-aws-credentials@v2
+        uses: aws-action/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::975050202573:role/my-cicd
+          role-to-assume: arn:aws:iam::975050202573:role/my-cicd-for-me
           aws-region: us-east-1
 
 #CI
@@ -36,7 +36,7 @@ jobs:
       
       - name: login to AWS ECR
         id: login-ecr
-        uses: aws-action/amazon-ecr-login@v1
+        uses: aws-action/amazon-ecr-login@v2
 
       - name: push docker images to amazon ECR
         env:
