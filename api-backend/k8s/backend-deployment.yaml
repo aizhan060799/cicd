@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: 401413892014.dkr.ecr.us-east-1.amazonaws.com/backend:k8s_version
+          image: 975050202573.dkr.ecr.us-east-1.amazonaws.com/reviews-app-backend:0.1 #adress of image  401413892014.dkr.ecr.us-east-1.amazonaws.com/backend:k8s_version
           ports:
             - containerPort: 3000
           env:

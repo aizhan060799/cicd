@@ -52,9 +52,9 @@ jobs:
       - name: login to EKS
         run: aws eks update-kubeconfig --name my-cicd #name-of-the-cluster
 
-      # - name: deploy the app
-      #   working-directory: api-backend/
-      #   run: kubectl apply -f k8/backend-deployment.yaml
+      - name: deploy the app
+        working-directory: api-backend/
+        run: kubectl apply -f k8/backend-deployment.yaml
         
 
      
