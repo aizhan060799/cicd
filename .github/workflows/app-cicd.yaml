@@ -40,7 +40,7 @@ jobs:
 
       - name: push docker images to amazon ECR
         env:
-          REGISTRY: ${{ steps.login-ecr.output.registry }}
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: reviews-app-backend
           IMAGE_TAG: 0.1
         run: |
