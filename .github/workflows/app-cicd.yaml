@@ -1,0 +1,60 @@
+name: Application CI/CD 
+
+permissions:
+  id-token: write  #permission to go to the aws
+  contents: read   #checkout the reo
+
+on:
+  push:
+    branches: [ "main", "staging", "feature/**" ]
+
+  # workflow_dispatch:  
+
+# env:
+#   ENVIRONMENT_STAGE: ${{ github.ref == 'refs/heads/main' && 'dev' || 'production' }}
+
+jobs:
+  app-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4 #name-of-owner-organization/name-of-the-repo@ref
+        #with: we can add version
+          #node-version: 18
+      #clone repo
+      - name: configure aws credentials
+        uses: aws-action/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::975050202573:role/my-cicd
+          aws-region: us-east-1
+
+#CI
+
+      - name: build an image
+        working-directory: api-backend/
+        run: doocker build -t reviews-app-backend:0.1 .
+      
+      - name: login to AWS ECR
+        id: login-ecr
+        uses: aws-action/amazon-ecr-login@v2
+
+      - name: push docker images to amazon ECR
+        env:
+          REGISTRY: ${{ steps.login-ecr.output.registry }}
+          REPOSITORY: reviews-app-backend
+          IMAGE_TAG: 0.1
+        run: |
+          docker tag $REPOSITORY:$IMAGE_TAG $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+      
+#CD      
+
+      - name: login to EKS
+        run: aws eks update-kubeconfig --name my-cicd #name-of-the-cluster
+
+      # - name: deploy the app
+      #   working-directory: api-backend/
+      #   run: kubectl apply -f k8/backend-deployment.yaml
+        
+
+     
