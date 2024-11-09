@@ -32,7 +32,7 @@ jobs:
 
       - name: build an image
         working-directory: api-backend/
-        run: doocker build -t reviews-app-backend:0.1 .
+        run: docker build -t reviews-app-backend:0.1 .
       
       - name: login to AWS ECR
         id: login-ecr
