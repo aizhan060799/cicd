@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4 #name-of-owner-organization/name-of-the-repo@ref
+        uses: actions/checkout@v3 #name-of-owner-organization/name-of-the-repo@ref
         #with: we can add version
           #node-version: 18
       #clone repo
