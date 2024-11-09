@@ -23,7 +23,7 @@ jobs:
           #node-version: 18
       #clone repo
       - name: configure aws credentials
-        uses: aws-action/configure-aws-credentials@v1
+        uses: aws-action/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::975050202573:role/my-cicd
           aws-region: us-east-1
