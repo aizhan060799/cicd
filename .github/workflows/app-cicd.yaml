@@ -54,7 +54,5 @@ jobs:
 
       - name: deploy the app
         working-directory: api-backend/
-        run: kubectl apply -f k8s/backend-deployment.yaml
-        
-
+        run: helm upgrade --install reviews-app-backend-release ./app-helm-chart/ --values app-helm-chart/dev-values.yaml --namespace reviews-app-dev --create-namespace  
      
