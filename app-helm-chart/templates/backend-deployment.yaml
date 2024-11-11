@@ -21,7 +21,7 @@ spec:
             - containerPort: {{ .Values.port }}
           env:
 
-          {{- range .Values.appConfig.secret }}
+          {{- range .Values.appConfig.secrets }}
           - name: {{ .env_name }}
             valueFrom:
               secretKeyRef:
