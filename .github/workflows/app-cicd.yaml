@@ -57,7 +57,6 @@ jobs:
           docker tag $REPOSITORY:$IMAGE_TAG $REGISTRY/$REPOSITORY:$IMAGE_TAG
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 #CD      
-
       - name: login to EKS
         run: aws eks update-kubeconfig --name my-cicd #name-of-the-cluster
 
