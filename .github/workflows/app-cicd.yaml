@@ -66,7 +66,7 @@ jobs:
          helm upgrade --install reviews-app-backend-release ./app-helm-chart/ \ 
         --values app-helm-chart/backend/values.yaml --namespace reviews-app-dev --create-namespace  
        
-      - name: deploy the Frontend app
-        run: |
-        helm upgrade --install reviews-app-backend-release ./app-helm-chart/ \ 
-        --values app-helm-chart/frontend/values.yaml --namespace reviews-app-dev 
+      # - name: deploy the Frontend app
+      #   run: |
+      #   helm upgrade --install reviews-app-backend-release ./app-helm-chart/ \ 
+      #   --values app-helm-chart/frontend/values.yaml --namespace reviews-app-dev 
