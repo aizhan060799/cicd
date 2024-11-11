@@ -9,11 +9,11 @@ secretName: mysql-secret
 appConfig:
   secrets:
   - env_name: DB_USERNAME
-    secret_name: mysql-secret
+    secretName: mysql-secret
     secretKeyName: MYSQL_USER
   - env_name: DB_PASSWORD
-    secret_name: mysql-secret
+    secretName: mysql-secret
     secretKeyName: MYSQL_PASSWORD
   - env_name: DB_NAME
-    secret_name: mysql-secret
+    secretName: mysql-secret
     secretKeyName: MYSQL_DATABASE
