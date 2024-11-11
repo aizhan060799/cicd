@@ -29,9 +29,10 @@ spec:
                   key: {{ .secretKeyName }}
           {{- end }}
          
-          - name: DB_ENDPOINT
-            value: "mysql" # Use the MySQL service name
-
+          {{- range .Values.appConfig.envVars }}
+          - name: {{ .name }} 
+            value: {{ .value }}  # Use the MySQL service name
+          {{- end }}
 ---
 apiVersion: v1
 kind: Service

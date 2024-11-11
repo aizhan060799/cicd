@@ -7,6 +7,9 @@ port: 3000
 servicePort: 80
 secretName: mysql-secret
 appConfig:
+  envVars:
+  - name: DB_ENDPOINT
+    value: mysql
   secrets:
   - env_name: DB_USERNAME
     secretName: mysql-secret
