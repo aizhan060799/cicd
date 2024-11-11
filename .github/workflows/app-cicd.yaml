@@ -67,4 +67,4 @@ jobs:
        
       - name: deploy the Frontend app
         run: |
-        helm upgrade --install reviews-app-frontend-release ./app-helm-chart/ --values app-helm-chart/frontend/values.yaml --namespace reviews-app-dev 
+         helm upgrade --install reviews-app-frontend-release ./app-helm-chart/ --values app-helm-chart/frontend/values.yaml --namespace reviews-app-dev
