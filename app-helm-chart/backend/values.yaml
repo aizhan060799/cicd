@@ -6,3 +6,14 @@ image:
 port: 3000
 servicePort: 80
 secretName: mysql-secret
+appConfig:
+  secrets:
+  - env_name: DB_USERNAME
+    secretName: mysql-secret
+    secretKeyName: MYSQL_USER
+  - env_name: DB_PASSWORD
+    secretName: mysql-secret
+    secretKeyName: MYSQL_PASSWORD
+  - env_name: DB_NAME
+    secretName: mysql-secret
+    secretKeyName: MYSQL_DATABASE
