@@ -1,11 +1,10 @@
 applicationName: reviews-app-backend
 replicaCount: 1
 image:
-  repo: 975050202573.dkr.ecr.us-east-1.amazonaws.com/reviews-app-backend
+  repo: 975050202573.dkr.ecr.us-east-1.amazonaws.com/reviews-app-frontend
   tag: 0.1
-port: 3000
+port: 80
 servicePort: 80
-secretName: mysql-secret
 appConfig:
   envVars: []
   secrets: []

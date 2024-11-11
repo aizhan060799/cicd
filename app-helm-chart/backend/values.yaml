@@ -5,7 +5,6 @@ image:
   tag: 0.1
 port: 3000
 servicePort: 80
-secretName: mysql-secret
 appConfig:
   envVars:
   - name: DB_ENDPOINT
