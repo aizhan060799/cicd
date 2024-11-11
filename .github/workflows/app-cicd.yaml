@@ -57,14 +57,13 @@ jobs:
           docker tag $REPOSITORY:$IMAGE_TAG $REGISTRY/$REPOSITORY:$IMAGE_TAG
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 #CD 
-     
+
       - name: login to EKS
         run: aws eks update-kubeconfig --name my-cicd #name-of-the-cluster
 
       - name: deploy the Backend app
         run: |
-         helm upgrade --install reviews-app-backend-release ./app-helm-chart/ \ 
-        --values app-helm-chart/backend/values.yaml --namespace reviews-app-dev --create-namespace  
+         helm upgrade --install reviews-app-backend-release ./app-helm-chart/ --values app-helm-chart/backend/values.yaml --namespace reviews-app-dev --create-namespace  
        
       # - name: deploy the Frontend app
       #   run: |
